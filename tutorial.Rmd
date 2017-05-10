@@ -1,0 +1,92 @@
+---
+title: "Regex in R with `stringr`"
+author: "Simon Goring"
+date: "May 9, 2017"
+output: html_document
+---
+
+<style>
+      @import url('https://fonts.googleapis.com/css?family=Roboto:400,700');
+      @import url('https://fonts.googleapis.com/css?family=Droid+Serif');
+      body {
+        font-family: 'Droid Serif', serif;
+      }
+      h1 {
+        font-family: 'Roboto';
+        font-weight: 500;
+        line-height: 1.1;
+        color: #48ca3b;
+      }
+      h2 {
+        font-family: 'Roboto';
+        font-weight: 300;
+        line-height: 1;
+        color: #48ca3b;
+      }
+</style>
+
+# Background on `stringr`
+
+`stringr` is a wrapper, and implementation that lies over top of the `stringi` R package.  In addition to these packages you can also use the base regular expression functions (`regexpr()`, `gsub()` and others).  It's critical to point out that there is a difference in the implementation of some of these expression engines, in particular the native `regexpr` implementation and the `stringi`/`stringr` implementations.  The `stringi` implementation is much closer to the native regular expression implementation as seen in other programming languages.
+
+# Some critical resources
+
+* [https://regex101.com/]() - Online testing of regular expressions with some great tools and breakdowns of expressions.
+
+* [http://regexr.com/]() - Another utility for matching expressions.
+
+* [Base R Regular Expressions](https://stat.ethz.ch/R-manual/R-devel/library/base/html/regex.html), a fairly good resource.
+
+* [Regular Expressions Info](http://www.regular-expressions.info/) - A pretty big site dedicated to regular expressions, with lots of examples.
+
+* [Handling and Processing Strings in R](http://gastonsanchez.com/Handling_and_Processing_Strings_in_R.pdf) by [Gaston Sanchez](http://gastonsanchez.com/), a UC-Berkeley faculty member, is a big PDF with lots of great content.
+
+# Regular expressions
+
+String matching is critical for making the internet work.  Password validation, checking URLs, email & credit card checks. . . in fact, regular expressions are associated with the earliest development of modern computers, with a standardized language developing in the mid 1950s.  The term `grep` comes from Global Regular Expression search and Print, which is exactly what R's `grep()` function does, and what `grep` does on almost any Linux based system.
+
+For this tutorial I also wrote a small Shiny app to test out some of the functions.  You can access the app from [my Shiny Apps repo](https://simongoring.shinyapps.io/RegularExpressionR/), and, as we continue working, you can clone and make pull requests from the [RegularExpressionR GitHub repository](https://github.com/SimonGoring/RegularExpressionR/).  In particular, the "short story" I wrote is intended to throw some curveballs, so if you feel that you can think of some tricks, please go ahead and add them in.
+
+## Important Matches
+
+Along with matching specific strings (like `Goring`, the default in the [Shiny app](https://simongoring.shinyapps.io/RegularExpressionR/)), it's possible to match classes of characters, for example all upper case characters, all lower case characters, or all numbers.
+
+| Expression | Explanation |
+| ---------- | ------------ |
+| `.`  | Matches anything (you can use `\.` to match a period). |
+| `\s` | Matches a space. |
+| `\d` | Matches a digit. |
+| `\w` | Match characters and numbers. |
+| `[:alpha:]` | Matches alphabetical characters. |
+| `[:upper:]` | Matches all capital letters. |
+| `[:lower:]` | Matches all lower case characters. |
+
+## Matching Multiples
+
+| Expression | Explanation |
+| ---------- | ------------ |
+| `*` | Any number of repeats. |
+| `{n}` | `n` repeats where `n` is a number. |
+| `{n,}` | `n` or more repeats. |
+| `{n,m}` | `n` or more repeats, but `m` or less. |
+
+## Matching Locations
+
+| Expression | Explanation |
+| ---------- | ------------ |
+| `^` | At the start. |
+| `$` | At the end. |
+
+# Using `stringr`
+
+So, given these options, lets see what we can do.  `stringr` has a number of key functions that we'll explore here.  There is a much more extensive tutorial 
+
+* `str_detect()`
+* `str_extract()`
+* `str_locate()`
+* `str_match()`
+* `str_replace()`
+
+There are a few exercises that I think we should try out.
+
+1. Find all the dollar amounts quoted in the story and plot the values.  You can read the text file using the `readr` package's 
