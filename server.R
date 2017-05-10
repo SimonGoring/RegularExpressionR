@@ -23,17 +23,18 @@ shinyServer(function(input, output) {
         stringr::str_replace_all(expr,
                              '<span style="background:#FFFF00">\\1</span>') %>% 
         paste0(collapse = "<br>") %>% 
-        stringr::str_replace("(A Short Story)",
+        stringr::str_replace("(A Short Story)<br>",
                              '<h1>\\1</h1>') %>% 
-        stringr::str_replace("(References)",
+        stringr::str_replace("(References)<br>",
                              '<h2>\\1</h2>')
     } else {
       replaced <- text_file %>% 
         paste0(collapse = "<br>") %>% 
-        stringr::str_replace("(A Short Story)",
+        stringr::str_replace("(A Short Story)<br>",
                              '<h1>\\1</h1>') %>% 
-        stringr::str_replace("(References)",
+        stringr::str_replace("(References)<br>",
                              '<h2>\\1</h2>')
+        
     }
     
     return(replaced)

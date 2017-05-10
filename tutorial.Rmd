@@ -149,6 +149,8 @@ text_file <- readr::read_lines(file) %>% ?????
 
 2.  Bonus Question: Can you pull everything out of quotes?
 
+<!-- ("([^"]|"")*") -->
+
 # Conclusion
 
 This is just an introduction to some of the tools you can use with regular expressions.  The book ["Mastering Regular Expressions"](http://shop.oreilly.com/product/9780596528126.do) is a 500+ page tome, and there are bigger volumes.  I also want to point you to a really cool post called ["The Greatest Regex Trick Ever"](http://www.rexegg.com/regex-best-trick.html).  It's pretty great at walking you through something that is, on the face of it, pretty simple, but, ultimately is actually quite elegant and complicated.
