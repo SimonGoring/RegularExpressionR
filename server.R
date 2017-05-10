@@ -29,7 +29,11 @@ shinyServer(function(input, output) {
                              '<h2>\\1</h2>')
     } else {
       replaced <- text_file %>% 
-        paste0(collapse = "<br>")
+        paste0(collapse = "<br>") %>% 
+        stringr::str_replace("(A Short Story)",
+                             '<h1>\\1</h1>') %>% 
+        stringr::str_replace("(References)",
+                             '<h2>\\1</h2>')
     }
     
     return(replaced)

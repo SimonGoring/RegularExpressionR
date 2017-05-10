@@ -76,6 +76,7 @@ Along with matching specific strings (like `Goring`, the default in the [Shiny a
 | ---------- | ------------ |
 | `^` | At the start. |
 | `$` | At the end. |
+| `?` | The lazy question mark! Optional. . . |
 
 # Using `stringr`
 
@@ -87,6 +88,68 @@ So, given these options, lets see what we can do.  `stringr` has a number of key
 * `str_match()`
 * `str_replace()`
 
-There are a few exercises that I think we should try out.
+There are a few exercises that I think we should try out.  One thing that will be helpful as you're testing is using the `htmltools::browsable()` function at the end of your call.  It will post your text output to the browser window.  You can further fix things up by adding tags or `<br>` elements for carriage returns.
 
-1. Find all the dollar amounts quoted in the story and plot the values.  You can read the text file using the `readr` package's 
+### Detecting:
+
+1.  I made a mistake adding in personal details.  When I showed this to my mom she got really mad at me and asked me to remove all mention of her.  Let's find all the lines that mention mom and then cut them.   You can read the text file using the `readr` package's `read_lines()` function and pulling from the same data file as the Shiny app:
+
+```r
+
+file <- 'https://raw.githubusercontent.com/SimonGoring/RegularExpressionR/master/data/raw_file.txt'
+
+text_file <- readr::read_lines(file) %>% ?????
+
+
+```
+
+<!-- 
+text_file <- readr::read_lines(file) %>% subset(!grepl("mom", .))
+# grepl is "logical" as opposed to a numeric vector.
+- OR -
+text_file <- readr::read_lines(file) %>% subset(!stringr::str_detect(., "mom")) %>% stringr::str_view(".")
+-->
+
+### Extraction
+
+1. Extract all the dollar amounts quoted in the story and plot the values.  Did you get everything?
+
+```r
+
+file <- 'https://raw.githubusercontent.com/SimonGoring/RegularExpressionR/master/data/raw_file.txt'
+
+text_file <- readr::read_lines(file) %>% ?????
+
+```
+
+<!-- 
+Answer:
+readr::read_lines(file) %>% 
+stringr::str_extract_all("\\$\\d*") %>% 
+unlist %>% na.omit %>% 
+stringr::str_extract("\\d(?,){1,}") %>% as.numeric %>% plot
+
+# Could add gsub ",", "" to remove the commas.
+-->
+
+2. Extract all the years that the papers were published.  Be careful to craft the statement correctly so you don't get all four character values!
+
+```r
+
+
+file <- 'https://raw.githubusercontent.com/SimonGoring/RegularExpressionR/master/data/raw_file.txt'
+
+text_file <- readr::read_lines(file) %>% ?????
+
+```
+
+### Replacing
+
+1.  In the Shiny app I do string matching, and then replace the text with the matched string, but also add an HTML tag (`<span>`) that includes the highlighting tag (`background`).  Along with my mom's personal information, I accidentally added a bunch of phone numbers.  Go in and replace all of them with `XXX-XXX-XXXX` so that they're masked.  Can you get them all?
+
+2.  Bonus Question: Can you pull everything out of quotes?
+
+# Conclusion
+
+This is just an introduction to some of the tools you can use with regular expressions.  The book ["Mastering Regular Expressions"](http://shop.oreilly.com/product/9780596528126.do) is a 500+ page tome, and there are bigger volumes.  I also want to point you to a really cool post called ["The Greatest Regex Trick Ever"](http://www.rexegg.com/regex-best-trick.html).  It's pretty great at walking you through something that is, on the face of it, pretty simple, but, ultimately is actually quite elegant and complicated.
+
