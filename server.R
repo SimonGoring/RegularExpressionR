@@ -14,7 +14,7 @@ shinyServer(function(input, output) {
   
   
   output$formattedText <- renderText({
-    
+    cat(input$expression, '\n')
     if(nchar(input$expression)> 1 & !input$expression %in% c("h1", "h2")) {
       
       expr <- paste0("(",input$expression,")")
